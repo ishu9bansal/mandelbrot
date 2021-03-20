@@ -5,7 +5,7 @@ const aspectRation = 16/9;
 const layers = [
 	'base'
 ];
-const colorScale = d3.scaleSequential().domain([0, 1]).interpolator(d3.interpolateInferno);
+const colorScale = d3.scaleSequential().domain([1, 0]).interpolator(d3.interpolateInferno);
 
 var data;
 var svg;
@@ -13,9 +13,25 @@ var width;
 var height;
 var layer;
 var pixels;
+var xScale;
+var yScale;
+var w;
+var h;
+
+function changeScale(cx, cy, scope){
+	xScale = d3.scaleLinear()
+	.domain([0,w])
+	.range([cx-scope*aspectRation, cx+scope*aspectRation]);
+
+	yScale = d3.scaleLinear()
+	.domain([0,h])
+	.range([cy-scope, cy+scope]);
+
+	render();
+}
 
 function getPixelColor(d){
-	return colorScale(Math.random());
+	return colorScale(mandel(xScale(d.x), yScale(d.y)));
 }
 
 function render(){
@@ -39,8 +55,8 @@ function init(){
 	}
 
 	// init data based on size
-	var w = Math.floor(resolution*aspectRation);
-	var h = Math.floor(resolution);
+	w = Math.floor(resolution*aspectRation);
+	h = Math.floor(resolution);
 	var n = w*h;
 	data = [];
 	for(var i=0; i<n; i++){
@@ -56,10 +72,12 @@ function init(){
 	.classed('pixel', true)
 	.attr('x', d => d.x*pixel).attr('y', d => d.y*pixel)
 	.attr('width', pixel).attr('height', pixel)
-	// .style('stroke', 'white')
 	.style('fill', 'grey');
 
 	pixels = layer['base'].selectAll('rect.pixel');
+
+	// set up scales
+	changeScale(0,0,2.1);
 }
 
 init();
