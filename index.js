@@ -102,6 +102,11 @@ function handleKeyPress(e){
 		case 'O':
 			handlePanAndZoom(0,0,2);
 			break;
+		case 'r':
+		case 'R':
+			iter += 25;
+			render();
+			break;
 		default:
 			setPanFraction(e.key);
 	}
