@@ -1,5 +1,5 @@
 const offset = 10;
-const pixel = 2;
+const pixel = 1;
 const resolution = 240;
 const aspectRation = 16/9;
 const layers = [
@@ -15,8 +15,21 @@ var layer;
 var pixels;
 var xScale;
 var yScale;
+var iter;
 var w;
 var h;
+
+// core method
+function mandel(x0,y0){
+	var x = 0;
+	var y = 0;
+	var i = 0;
+	while(x*x+y*y<4 && i<iter){
+		i++;
+		[x,y] = [x*x - y*y + x0, 2*x*y + y0];
+	}
+	return i/iter;
+}
 
 function changeScale(cx, cy, scope){
 	xScale = d3.scaleLinear()
@@ -45,8 +58,7 @@ function init(){
 
 	svg = d3.select("svg")
 	.attr("width", width).attr("height", height)
-	.attr("x", offset).attr("y", offset)
-	.on('click', render);
+	.attr("x", offset).attr("y", offset);
 
 	// add layers to the svg
 	layer = {};
@@ -76,8 +88,9 @@ function init(){
 
 	pixels = layer['base'].selectAll('rect.pixel');
 
-	// set up scales
-	changeScale(0,0,2.1);
+	// set up initial scales, and iterations
+	iter = 50;
+	changeScale(0,0,1.5);
 }
 
 init();
