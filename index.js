@@ -57,6 +57,16 @@ function render(){
 	pixels.style('fill', getPixelColor);
 }
 
+function handleClickZoom(){
+	var [x,y] = d3.mouse(this);
+	if(x<0||y<0||x>=w*pixel||y>=h*pixel)
+		return;
+	cx = xScale(x);
+	cy = yScale(y);
+	scope /= 2;
+	changeScale();
+}
+
 function handlePanAndZoom(dx, dy, z = 1){
 	cx += dx*pan*xScope(scope);
 	cy += dy*pan*yScope(scope);
@@ -104,7 +114,8 @@ function init(){
 
 	svg = d3.select("svg")
 	.attr("width", width).attr("height", height)
-	.attr("x", offset).attr("y", offset);
+	.attr("x", offset).attr("y", offset)
+	.on('click', handleClickZoom);
 
 	// add layers to the svg
 	layer = {};
@@ -137,8 +148,8 @@ function init(){
 	// set up initial scales, and iterations
 	cx = cy = 0;
 	scope = 1.5;
-	iter = 50;
-	setPanFraction(0);
+	iter = 25;
+	setPanFraction(3);
 	handlePanAndZoom(0,0);
 
 	window.onkeydown = handleKeyPress;
