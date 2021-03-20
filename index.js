@@ -107,6 +107,11 @@ function handleKeyPress(e){
 			iter += 25;
 			render();
 			break;
+		case 'z':
+		case 'Z':
+			scope = 1.5;
+			changeScale();
+			break;
 		default:
 			setPanFraction(e.key);
 	}
