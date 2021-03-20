@@ -1,11 +1,13 @@
 const offset = 10;
 const pixel = 1;
 const resolution = 240;
-const aspectRation = 16/9;
+const aspectRatio = 16/9;
 const layers = [
 	'base'
 ];
 const colorScale = d3.scaleSequential().domain([1, 0]).interpolator(d3.interpolateInferno);
+const xScope = (s) => s*aspectRatio;
+const yScope = (s) => s;
 
 var data;
 var svg;
@@ -18,6 +20,10 @@ var yScale;
 var iter;
 var w;
 var h;
+var cx;
+var cy;
+var scope;
+var pan;
 
 // core method
 function mandel(x0,y0){
@@ -31,14 +37,14 @@ function mandel(x0,y0){
 	return i/iter;
 }
 
-function changeScale(cx, cy, scope){
+function changeScale(){
 	xScale = d3.scaleLinear()
 	.domain([0,w])
-	.range([cx-scope*aspectRation, cx+scope*aspectRation]);
+	.range([cx-xScope(scope), cx+xScope(scope)]);
 
 	yScale = d3.scaleLinear()
 	.domain([0,h])
-	.range([cy-scope, cy+scope]);
+	.range([cy-yScope(scope), cy+yScope(scope)]);
 
 	render();
 }
@@ -49,6 +55,46 @@ function getPixelColor(d){
 
 function render(){
 	pixels.style('fill', getPixelColor);
+}
+
+function handlePanAndZoom(dx, dy, z = 1){
+	cx += dx*pan*xScope(scope);
+	cy += dy*pan*yScope(scope);
+	scope *= z;
+	changeScale();
+}
+
+function setPanFraction(k){
+	k = parseInt(k);
+	if(k==NaN) return;
+	pan = k/10;
+}
+
+function handleKeyPress(e){
+	switch(e.key){
+		case 'ArrowRight':
+			handlePanAndZoom(1,0);
+			break;
+		case 'ArrowDown':
+			handlePanAndZoom(0,1);
+			break;
+		case 'ArrowLeft':
+			handlePanAndZoom(-1,0);
+			break;
+		case 'ArrowUp':
+			handlePanAndZoom(0,-1);
+			break;
+		case 'i':
+		case 'I':
+			handlePanAndZoom(0,0,0.5);
+			break;
+		case 'o':
+		case 'O':
+			handlePanAndZoom(0,0,2);
+			break;
+		default:
+			setPanFraction(e.key);
+	}
 }
 
 function init(){
@@ -67,7 +113,7 @@ function init(){
 	}
 
 	// init data based on size
-	w = Math.floor(resolution*aspectRation);
+	w = Math.floor(resolution*aspectRatio);
 	h = Math.floor(resolution);
 	var n = w*h;
 	data = [];
@@ -89,8 +135,13 @@ function init(){
 	pixels = layer['base'].selectAll('rect.pixel');
 
 	// set up initial scales, and iterations
+	cx = cy = 0;
+	scope = 1.5;
 	iter = 50;
-	changeScale(0,0,1.5);
+	setPanFraction(0);
+	handlePanAndZoom(0,0);
+
+	window.onkeydown = handleKeyPress;
 }
 
 init();
