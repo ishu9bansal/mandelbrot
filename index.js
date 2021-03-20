@@ -5,12 +5,22 @@ const aspectRation = 16/9;
 const layers = [
 	'base'
 ];
+const colorScale = d3.scaleSequential().domain([0, 1]).interpolator(d3.interpolateInferno);
 
 var data;
 var svg;
 var width;
 var height;
 var layer;
+var pixels;
+
+function getPixelColor(d){
+	return colorScale(Math.random());
+}
+
+function render(){
+	pixels.style('fill', getPixelColor);
+}
 
 function init(){
 	// set height and width of the svg element
@@ -19,7 +29,8 @@ function init(){
 
 	svg = d3.select("svg")
 	.attr("width", width).attr("height", height)
-	.attr("x", offset).attr("y", offset);
+	.attr("x", offset).attr("y", offset)
+	.on('click', render);
 
 	// add layers to the svg
 	layer = {};
@@ -48,6 +59,7 @@ function init(){
 	// .style('stroke', 'white')
 	.style('fill', 'grey');
 
+	pixels = layer['base'].selectAll('rect.pixel');
 }
 
 init();
