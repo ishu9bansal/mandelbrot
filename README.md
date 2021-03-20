@@ -1,1 +1,1 @@
-# [Visualize Sorts](https://ishu9bansal.github.io/mandelbrot/)
+# [Mandelbrot Set](https://ishu9bansal.github.io/mandelbrot/)
