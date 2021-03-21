@@ -27,15 +27,14 @@ var colorScale;
 var colorScheme;
 
 // core method
-function mandel(x0,y0){
-	var x = 0;
-	var y = 0;
-	var i = 0;
-	while(x*x+y*y<4 && i<iter){
-		i++;
-		[x,y] = [x*x - y*y + x0, 2*x*y + y0];
+function chaos(x0,y0){
+	var r = x0;
+	var x = y0;
+	var i = iter;
+	while(i--){
+		x = r*x*(1-x);
 	}
-	return i/iter;
+	return x;
 }
 
 function recalculateColorScheme(){
@@ -51,14 +50,18 @@ function recalculateColorScheme(){
 
 function calculate(){
 	data.forEach(function(d){
-		d.v = mandel(xScale(d.x), yScale(d.y));
+		d.v = Math.floor(yScale.invert(chaos(xScale(d.x), yScale(d.y))));
 	});
 }
 
 function render(){
 	data.forEach(function(d){
-		context.fillStyle = colorScale(d.v);
+		context.fillStyle = 'black';
 		context.fillRect(pixel*d.x, pixel*d.y, pixel, pixel);
+	});
+	data.forEach(function(d){
+		context.fillStyle = 'white';
+		context.fillRect(pixel*d.x, pixel*d.v, pixel, pixel);
 	});
 }
 
@@ -66,11 +69,11 @@ function draw(){
 	// set view port to the coordinates and scale
 	xScale = d3.scaleLinear()
 	.domain([0,w])
-	.range([cx-xScope(scope), cx+xScope(scope)]);
+	.range([cx-scope, cx+scope]);
 
 	yScale = d3.scaleLinear()
 	.domain([0,h])
-	.range([cy-yScope(scope), cy+yScope(scope)]);
+	.range([1,0]);
 
 	// recalculate pixel info
 	calculate();

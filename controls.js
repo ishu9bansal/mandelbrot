@@ -27,7 +27,7 @@ const controlButtons = {
 	zoomIn: [controlMethods.zoom(0.5)],
 	zoomOut: [controlMethods.zoom(2)],
 	move: d => [controlMethods.pan(dir[direction[d]], dir[direction[d]+1])],
-	reset: [d => (d.cx=0,d.cy=0,d.iter=25,d.scope=1.5,d.colorScheme='global'), d => pan = 0.5],
+	reset: [d => (d.cx=2,d.iter=25,d.scope=2,d.colorScheme='global'), d => pan = 0.5],
 	panFraction: f => [d => pan = f]
 };
 
