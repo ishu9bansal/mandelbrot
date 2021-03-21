@@ -25,6 +25,9 @@ var cy;
 var scope;
 var colorScale;
 var colorScheme;
+var svg;
+var xAxis;
+var yAxis;
 
 // core method
 function chaos(x0,y0){
@@ -75,6 +78,10 @@ function draw(){
 	.domain([0,h])
 	.range([1,0]);
 
+	// draw axis
+	xAxis.call(d3.axisBottom(xAxisScale.domain(xScale.range())));
+	yAxis.call(d3.axisRight(yAxisScale.domain(yScale.range())));
+
 	// recalculate pixel info
 	calculate();
 
@@ -120,21 +127,36 @@ function changeControls(methods){
 }
 
 function init(){
-	// set height and width of the svg element
-	width = window.innerWidth - 2*offset;
-	height = window.innerHeight - 2*offset;
-
 	// draw canvas based on size
 	w = Math.floor(resolution*aspectRatio);
 	h = Math.floor(resolution);
 
+	// set height and width of the svg element
+	width = w + 100;	// right axis space
+	height = h + 50;	// bottom axis space
+
+	svg = d3.select('svg')
+	.attr('width', width)
+	.attr('height',height);
+
+	// axes space on svg
+	xAxis = svg.append('g')
+	.attr("transform", "translate(0," + h + ")");
+	yAxis = svg.append('g')
+	.attr("transform", "translate(" + w + ",0)");
+
+	// define axes scale
+	xAxisScale = d3.scaleLinear().range([0,w*pixel]);
+	yAxisScale = d3.scaleLinear().range([0,h*pixel]);
+	
+	// difine canvas
 	canvas = d3.select('canvas')
 	.attr('width', w*pixel)
 	.attr('height', h*pixel)
 	.on('click', handleClickZoom);
-
 	context = canvas.node().getContext('2d');
 
+	// init data
 	data = [];
 	d3.range(w*h).forEach(function(i){
 		data.push({
