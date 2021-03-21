@@ -131,8 +131,6 @@ function init(){
 	w = Math.floor(resolution*aspectRatio);
 	h = Math.floor(resolution);
 
-	// TODO: on click not working due to svg overlay
-
 	// set height and width of the svg element
 	width = w + 100;	// right axis space
 	height = h + 50;	// bottom axis space
@@ -157,6 +155,11 @@ function init(){
 	.attr('height', h*pixel)
 	.on('click', handleClickZoom);
 	context = canvas.node().getContext('2d');
+
+	// set legend poition
+	d3.select('#legend')
+	.select('p')
+	.style('top', height);
 
 	// init data
 	data = [];
