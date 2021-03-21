@@ -40,6 +40,7 @@ var controlKeys = {
 	'o': controlButtons.zoomOut,
 	'I': controlButtons.zoomIn,
 	'O': controlButtons.zoomOut,
+	// TODO: remove this dependency
 	'l': [d => d.colorScheme = 'local'],
 	'f': [d => d.colorScheme = 'fixed'],
 	'g': [d => d.colorScheme = 'global']

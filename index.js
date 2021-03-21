@@ -84,12 +84,14 @@ function draw(){
 
 function handleClickZoom(){
 	var [x,y] = d3.mouse(this);
-	if(x<0||y<0||x>=w*pixel||y>=h*pixel)
-		return;
-	cx = xScale(x);
-	cy = yScale(y);
-	scope /= 2;
-	draw();
+	if(x<0||y<0||x>=w*pixel||y>=h*pixel){
+		changeControls(controlButtons.zoomOut);
+	}
+	else{
+		cx = xScale(x);
+		cy = yScale(y);
+		changeControls(controlButtons.zoomIn);
+	}
 }
 
 function handleControl(control){
