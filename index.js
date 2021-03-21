@@ -2,7 +2,6 @@ const offset = 10;
 const pixel = 1;
 const resolution = 480;
 const aspectRatio = 16/9;
-const colorScale = d3.scaleSequential().domain([1, 0]).interpolator(d3.interpolateInferno);
 const xScope = (s) => s*aspectRatio;
 const yScope = (s) => s;
 
@@ -21,6 +20,8 @@ var cx;
 var cy;
 var scope;
 var pan;
+var colorScale;
+var changeColors;
 
 // core method
 function mandel(x0,y0){
@@ -34,7 +35,31 @@ function mandel(x0,y0){
 	return i/iter;
 }
 
-function changeScale(){
+function recalculateColorScheme(){
+	if(!changeColors)	return;
+
+	colorScale = d3.scaleSequential()
+	.domain([d3.max(data, d => d.v), d3.min(data, d => d.v)])
+	.interpolator(d3.interpolateInferno);
+
+	changeColors = false;
+}
+
+function calculate(){
+	data.forEach(function(d){
+		d.v = mandel(xScale(d.x), yScale(d.y));
+	});
+}
+
+function render(){
+	data.forEach(function(d){
+		context.fillStyle = colorScale(d.v);
+		context.fillRect(pixel*d.x, pixel*d.y, pixel, pixel);
+	});
+}
+
+function draw(){
+	// set view port to the coordinates and scale
 	xScale = d3.scaleLinear()
 	.domain([0,w])
 	.range([cx-xScope(scope), cx+xScope(scope)]);
@@ -43,18 +68,14 @@ function changeScale(){
 	.domain([0,h])
 	.range([cy-yScope(scope), cy+yScope(scope)]);
 
+	// recalculate pixel info
+	calculate();
+
+	// recalculate color scheme if needed
+	recalculateColorScheme();
+
+	// render based on the color scheme
 	render();
-}
-
-function getPixelColor(d){
-	return colorScale(mandel(xScale(d.x), yScale(d.y)));
-}
-
-function render(){
-	data.forEach(function(d){
-		context.fillStyle = getPixelColor(d);
-		context.fillRect(pixel*d.x, pixel*d.y, pixel, pixel);
-	});
 }
 
 function handleClickZoom(){
@@ -64,14 +85,14 @@ function handleClickZoom(){
 	cx = xScale(x);
 	cy = yScale(y);
 	scope /= 2;
-	changeScale();
+	draw();
 }
 
 function handlePanAndZoom(dx, dy, z = 1){
 	cx += dx*pan*xScope(scope);
 	cy += dy*pan*yScope(scope);
 	scope *= z;
-	changeScale();
+	draw();
 }
 
 function setPanFraction(k){
@@ -102,15 +123,20 @@ function handleKeyPress(e){
 		case 'O':
 			handlePanAndZoom(0,0,2);
 			break;
-		case 'r':
-		case 'R':
+		case 'd':
+		case 'D':
 			iter += 25;
-			render();
+			draw();
+			break;
+		case 'c':
+		case 'C':
+			changeColors = true;
+			draw();
 			break;
 		case 'z':
 		case 'Z':
 			scope = 1.5;
-			changeScale();
+			draw();
 			break;
 		default:
 			setPanFraction(e.key);
@@ -141,11 +167,12 @@ function init(){
 		});
 	});
 
-	// set up initial scales, and iterations
+	// set up initial scales, colors and iterations
 	cx = cy = 0;
 	scope = 1.5;
 	iter = 25;
 	setPanFraction(3);
+	changeColors = true;
 	handlePanAndZoom(0,0);
 
 	window.onkeydown = handleKeyPress;
