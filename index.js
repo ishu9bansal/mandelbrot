@@ -19,7 +19,6 @@ var h;
 var cx;
 var cy;
 var scope;
-var pan;
 var colorScale;
 var changeColors;
 
@@ -116,7 +115,7 @@ function changeControls(methods){
 		scope: scope,
 		iter: iter
 	};
-	methods.forEach(method => control = method(control));
+	methods.forEach(method => method(control));
 	handleControl(control);
 }
 
@@ -128,10 +127,7 @@ function handleKeyPress(e){
 			draw();
 			break;
 		default:
-			if(controlButtons[e.key])
-				changeControls(controlButtons[e.key]);
-			else
-				setPanFraction(e.key);
+			changeControls(controlKeys[e.key]);
 	}
 }
 
@@ -160,9 +156,8 @@ function init(){
 	});
 
 	// set up initial scales, colors and iterations
-	setPanFraction(3);
 	changeColors = true;
-	handleKeyPress({key:'reset'});
+	changeControls(controlButtons.reset);
 
 	window.onkeydown = handleKeyPress;
 }

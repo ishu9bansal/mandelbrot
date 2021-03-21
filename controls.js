@@ -1,29 +1,52 @@
 const dir = [-1, 0, 1, 0, -1]; // [left, down, right, up]
-
+const direction = {
+	left: 0,
+	down: 1,
+	right: 2,
+	up: 3
+};
+var pan = 0;
 const controlMethods = {
 	iter: function(step){
-		return d => (d.iter+=step,d);
+		return d => d.iter+=step;
 	},
 	zoom: function(multiplier){
-		return d => (d.scope*=multiplier,d);
+		return d => d.scope*=multiplier;
 	},
-	pan: function(i, j, p){
+	pan: function(i, j){
 		return function(d) {
-			d.cx += i*p*d.scope;
-			d.cy += j*p*d.scope;
-			return d;
+			d.cx += i*pan*d.scope;
+			d.cy += j*pan*d.scope;
 		}
-	},
+	}
 };
 
 const controlButtons = {
-	'd': [controlMethods.iter(25)],
-	'z': [d =>  (d.scope=1.5,d)],
-	'i': [controlMethods.zoom(0.5)],
-	'o': [controlMethods.zoom(2)],
-	'ArrowRight': [controlMethods.pan(dir[2], dir[3], 0.3)],
-	'ArrowDown': [controlMethods.pan(dir[1], dir[2], 0.3)],
-	'ArrowLeft': [controlMethods.pan(dir[0], dir[1], 0.3)],
-	'ArrowUp': [controlMethods.pan(dir[3], dir[4], 0.3)],
-	'reset': [d =>  (d.scope=1.5,d), d => (d.cx=0,d.cy=0,d.iter=25,d)]
+	iter25: [controlMethods.iter(25)],
+	resetZoom: [d =>  d.scope=1.5],
+	zoomIn: [controlMethods.zoom(0.5)],
+	zoomOut: [controlMethods.zoom(2)],
+	move: d => [controlMethods.pan(dir[direction[d]], dir[direction[d]+1])],
+	reset: [d =>  d.scope=1.5, d => (d.cx=0,d.cy=0,d.iter=25), d => pan = 0.5],
+	panFraction: f => [d => pan = f]
 };
+
+var controlKeys = {
+	'd': controlButtons.iter25,
+	'D': controlButtons.iter25,
+	'z': controlButtons.resetZoom,
+	'Z': controlButtons.resetZoom,
+	'i': controlButtons.zoomIn,
+	'o': controlButtons.zoomOut,
+	'I': controlButtons.zoomIn,
+	'O': controlButtons.zoomOut
+};
+
+for(var key in direction){
+	var ck = 'Arrow' + key.charAt(0).toUpperCase() + key.slice(1);
+	controlKeys[ck] = controlButtons.move(key);
+}
+
+for(var i=1; i<=9; i++){
+	controlKeys[i.toString()] = controlButtons.panFraction(i/10);
+}
