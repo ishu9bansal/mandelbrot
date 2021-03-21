@@ -27,7 +27,7 @@ const controlButtons = {
 	zoomIn: [controlMethods.zoom(0.5)],
 	zoomOut: [controlMethods.zoom(2)],
 	move: d => [controlMethods.pan(dir[direction[d]], dir[direction[d]+1])],
-	reset: [d =>  d.scope=1.5, d => (d.cx=0,d.cy=0,d.iter=25), d => pan = 0.5],
+	reset: [d => (d.cx=0,d.cy=0,d.iter=25,d.scope=1.5,d.colorScheme='global'), d => pan = 0.5],
 	panFraction: f => [d => pan = f]
 };
 
@@ -39,7 +39,11 @@ var controlKeys = {
 	'i': controlButtons.zoomIn,
 	'o': controlButtons.zoomOut,
 	'I': controlButtons.zoomIn,
-	'O': controlButtons.zoomOut
+	'O': controlButtons.zoomOut,
+	'l': [d => d.colorScheme = 'local'],
+	'f': [d => d.colorScheme = 'fixed'],
+	'g': [d => d.colorScheme = 'global']
+
 };
 
 for(var key in direction){

@@ -2,8 +2,12 @@ const offset = 10;
 const pixel = 1;
 const resolution = 480;
 const aspectRatio = 16/9;
+const globalColorScale = d3.scaleSequential().domain([1,0]).interpolator(d3.interpolateInferno);
 const xScope = (s) => s*aspectRatio;
 const yScope = (s) => s;
+const GLOBAL = 'global';
+const LOCAL = 'local';
+const FIXED = 'fixed';
 
 var data;
 var canvas;
@@ -20,7 +24,7 @@ var cx;
 var cy;
 var scope;
 var colorScale;
-var changeColors;
+var colorScheme;
 
 // core method
 function mandel(x0,y0){
@@ -35,13 +39,14 @@ function mandel(x0,y0){
 }
 
 function recalculateColorScheme(){
-	if(!changeColors)	return;
-
-	colorScale = d3.scaleSequential()
-	.domain([d3.max(data, d => d.v), d3.min(data, d => d.v)])
-	.interpolator(d3.interpolateInferno);
-
-	changeColors = false;
+	if(colorScheme==GLOBAL){
+		colorScale = globalColorScale;
+	}
+	else if(colorScheme==LOCAL){
+		colorScale = d3.scaleSequential()
+		.domain([d3.max(data, d => d.v), d3.min(data, d => d.v)])
+		.interpolator(d3.interpolateInferno);
+	}
 }
 
 function calculate(){
@@ -87,48 +92,26 @@ function handleClickZoom(){
 	draw();
 }
 
-function handlePanAndZoom(dx, dy, z = 1){
-	cx += dx*pan*xScope(scope);
-	cy += dy*pan*yScope(scope);
-	scope *= z;
-	draw();
-}
-
-function setPanFraction(k){
-	k = parseInt(k);
-	if(k==NaN) return;
-	pan = k/10;
-}
-
 function handleControl(control){
 	cx = control.cx;
 	cy = control.cy;
 	scope = control.scope;
 	iter = control.iter;
+	colorScheme = control.colorScheme;
 	draw();
 }
 
 function changeControls(methods){
+	if(!methods) return;
 	control = {
 		cx: cx,
 		cy: cy,
 		scope: scope,
-		iter: iter
+		iter: iter,
+		colorScheme: colorScheme
 	};
 	methods.forEach(method => method(control));
 	handleControl(control);
-}
-
-function handleKeyPress(e){
-	switch(e.key){
-		case 'c':
-		case 'C':
-			changeColors = true;
-			draw();
-			break;
-		default:
-			changeControls(controlKeys[e.key]);
-	}
 }
 
 function init(){
@@ -156,10 +139,9 @@ function init(){
 	});
 
 	// set up initial scales, colors and iterations
-	changeColors = true;
 	changeControls(controlButtons.reset);
 
-	window.onkeydown = handleKeyPress;
+	window.onkeydown = e => changeControls(controlKeys[e.key]);
 }
 
 init();
