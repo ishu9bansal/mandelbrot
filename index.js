@@ -101,45 +101,37 @@ function setPanFraction(k){
 	pan = k/10;
 }
 
+function handleControl(control){
+	cx = control.cx;
+	cy = control.cy;
+	scope = control.scope;
+	iter = control.iter;
+	draw();
+}
+
+function changeControls(methods){
+	control = {
+		cx: cx,
+		cy: cy,
+		scope: scope,
+		iter: iter
+	};
+	methods.forEach(method => control = method(control));
+	handleControl(control);
+}
+
 function handleKeyPress(e){
 	switch(e.key){
-		case 'ArrowRight':
-			handlePanAndZoom(1,0);
-			break;
-		case 'ArrowDown':
-			handlePanAndZoom(0,1);
-			break;
-		case 'ArrowLeft':
-			handlePanAndZoom(-1,0);
-			break;
-		case 'ArrowUp':
-			handlePanAndZoom(0,-1);
-			break;
-		case 'i':
-		case 'I':
-			handlePanAndZoom(0,0,0.5);
-			break;
-		case 'o':
-		case 'O':
-			handlePanAndZoom(0,0,2);
-			break;
-		case 'd':
-		case 'D':
-			iter += 25;
-			draw();
-			break;
 		case 'c':
 		case 'C':
 			changeColors = true;
 			draw();
 			break;
-		case 'z':
-		case 'Z':
-			scope = 1.5;
-			draw();
-			break;
 		default:
-			setPanFraction(e.key);
+			if(controlButtons[e.key])
+				changeControls(controlButtons[e.key]);
+			else
+				setPanFraction(e.key);
 	}
 }
 
@@ -168,12 +160,9 @@ function init(){
 	});
 
 	// set up initial scales, colors and iterations
-	cx = cy = 0;
-	scope = 1.5;
-	iter = 25;
 	setPanFraction(3);
 	changeColors = true;
-	handlePanAndZoom(0,0);
+	handleKeyPress({key:'reset'});
 
 	window.onkeydown = handleKeyPress;
 }
