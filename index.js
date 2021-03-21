@@ -122,16 +122,17 @@ function init(){
 	width = window.innerWidth - 2*offset;
 	height = window.innerHeight - 2*offset;
 
+	// draw canvas based on size
+	w = Math.floor(resolution*aspectRatio);
+	h = Math.floor(resolution);
+
 	canvas = d3.select('canvas')
-	.attr('width', width)
-	.attr('height', height)
+	.attr('width', w*pixel)
+	.attr('height', h*pixel)
 	.on('click', handleClickZoom);
 
 	context = canvas.node().getContext('2d');
 
-	// init data based on size
-	w = Math.floor(resolution*aspectRatio);
-	h = Math.floor(resolution);
 	data = [];
 	d3.range(w*h).forEach(function(i){
 		data.push({
