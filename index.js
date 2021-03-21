@@ -131,6 +131,8 @@ function init(){
 	w = Math.floor(resolution*aspectRatio);
 	h = Math.floor(resolution);
 
+	// TODO: on click not working due to svg overlay
+
 	// set height and width of the svg element
 	width = w + 100;	// right axis space
 	height = h + 50;	// bottom axis space
@@ -148,7 +150,7 @@ function init(){
 	// define axes scale
 	xAxisScale = d3.scaleLinear().range([0,w*pixel]);
 	yAxisScale = d3.scaleLinear().range([0,h*pixel]);
-	
+
 	// difine canvas
 	canvas = d3.select('canvas')
 	.attr('width', w*pixel)
