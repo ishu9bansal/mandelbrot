@@ -1,19 +1,16 @@
 const offset = 10;
 const pixel = 1;
-const resolution = 240;
+const resolution = 480;
 const aspectRatio = 16/9;
-const layers = [
-	'base'
-];
 const colorScale = d3.scaleSequential().domain([1, 0]).interpolator(d3.interpolateInferno);
 const xScope = (s) => s*aspectRatio;
 const yScope = (s) => s;
 
 var data;
-var svg;
+var canvas;
+var context;
 var width;
 var height;
-var layer;
 var pixels;
 var xScale;
 var yScale;
@@ -54,7 +51,10 @@ function getPixelColor(d){
 }
 
 function render(){
-	pixels.style('fill', getPixelColor);
+	data.forEach(function(d){
+		context.fillStyle = getPixelColor(d);
+		context.fillRect(pixel*d.x, pixel*d.y, pixel, pixel);
+	});
 }
 
 function handleClickZoom(){
@@ -122,38 +122,23 @@ function init(){
 	width = window.innerWidth - 2*offset;
 	height = window.innerHeight - 2*offset;
 
-	svg = d3.select("svg")
-	.attr("width", width).attr("height", height)
-	.attr("x", offset).attr("y", offset)
+	canvas = d3.select('canvas')
+	.attr('width', width)
+	.attr('height', height)
 	.on('click', handleClickZoom);
 
-	// add layers to the svg
-	layer = {};
-	for(var i of layers){
-		layer[i] = svg.append('g');
-	}
+	context = canvas.node().getContext('2d');
 
 	// init data based on size
 	w = Math.floor(resolution*aspectRatio);
 	h = Math.floor(resolution);
-	var n = w*h;
 	data = [];
-	for(var i=0; i<n; i++){
+	d3.range(w*h).forEach(function(i){
 		data.push({
 			x: i%w,
 			y: Math.floor(i/w)
 		});
-	}
-
-	// init all pixels
-	layer['base'].selectAll('rect.pixel')
-	.data(data).enter().append('rect')
-	.classed('pixel', true)
-	.attr('x', d => d.x*pixel).attr('y', d => d.y*pixel)
-	.attr('width', pixel).attr('height', pixel)
-	.style('fill', 'grey');
-
-	pixels = layer['base'].selectAll('rect.pixel');
+	});
 
 	// set up initial scales, and iterations
 	cx = cy = 0;
