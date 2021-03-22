@@ -105,15 +105,19 @@ function handleControl(control){
 
 function changeControls(methods){
 	if(!methods) return;
-	control = {
+	control = getControlObj();
+	methods.forEach(method => method(control));
+	handleControl(control);
+}
+
+function getControlObj(){
+	return {
 		cx: cx,
 		cy: cy,
 		scope: scope,
 		iter: iter,
 		colorScheme: colorScheme
 	};
-	methods.forEach(method => method(control));
-	handleControl(control);
 }
 
 function init(){
