@@ -32,5 +32,13 @@
 		"scope": 5.329070518200751e-15,
 		"iter": 425,
 		"colorScheme": "local"
+	},
+	{
+		"cx": -0.20066006697580957,
+		"cy": -1.1005299561671356,
+		"scope": 5.329070518200751e-15,
+		"iter": 425,
+		"colorScheme": "local",
+		"details": "you think you have zoomed out enough"
 	}
 ]
