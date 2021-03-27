@@ -13,24 +13,52 @@
       <svg class="axes"></svg>
     </div>
     <div>
-      <p class="operations" style="position: absolute;">
-        use arrow keys to navigate around
-        <br>
-        I: zoom in
-        <br>
-        O: zoom out
-        <br>
-        Z: zoom reset
-        <br>
-        D: add details
-        <br>
-        L: local color scheme
-        <br>
-        G: global color scheme
-        <br>
-        F: fix color scheme
-        <br>
-      </p>
+      <div class="operations" style="position: absolute;">
+        <div>
+          <button title="shortcut: ArrowLeft" class="btn" style="opacity: 0;" >
+            <i class="fa fa-arrow-left"></i>
+          </button>
+          <button title="shortcut: ArrowUp" class="btn" onclick="changeControls(controlKeys['ArrowUp'])" >
+            <i class="fa fa-arrow-up"></i>
+          </button>
+          <button title="shortcut: ArrowRight" class="btn" style="visibility: hidden;" >
+            <i class="fa fa-arrow-right"></i>
+          </button>
+        </div>
+        <div style="display: flex; text-align: center;">
+          <button title="shortcut: ArrowLeft" class="btn" onclick="changeControls(controlKeys['ArrowLeft'])" >
+            <i class="fa fa-arrow-left"></i>
+          </button>
+          <button title="shortcut: D" class="btn" onclick="changeControls(controlKeys['d'])" >
+            &nbsp;&nbsp;<i class="fa fa-bolt"></i>&nbsp;&nbsp;
+          </button>
+          <button title="shortcut: ArrowRight" class="btn" onclick="changeControls(controlKeys['ArrowRight'])" >
+            <i class="fa fa-arrow-right"></i>
+          </button>
+        </div>
+        <div>
+          <button title="shortcut: ArrowLeft" class="btn" style="visibility: hidden;" >
+            <i class="fa fa-arrow-left"></i>
+          </button>
+          <button title="shortcut: ArrowDown" class="btn" onclick="changeControls(controlKeys['ArrowDown'])" >
+            <i class="fa fa-arrow-down"></i>
+          </button>
+          <button title="shortcut: ArrowRight" class="btn" style="visibility: hidden;" >
+            <i class="fa fa-arrow-right"></i>
+          </button>
+        </div>
+        <div>
+          <button title="shortcut: O" class="btn" onclick="changeControls(controlKeys['o'])" >
+            <i class="fa fa-minus-square"></i> | Zoom Out
+          </button>
+          <button title="shortcut: Z" class="btn" onclick="changeControls(controlKeys['z'])" >
+            <i class="fa fa-refresh"></i> | Reset
+          </button>
+           <button title="shortcut: I" class="btn" onclick="changeControls(controlKeys['i'])" >
+            <i class="fa fa-plus-square"></i> | Zoom In
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <script type="text/javascript" src="index.js"></script>
