@@ -9,7 +9,7 @@ canvas{
 }
 
 button {
-  background-color: purple; /* Green */
+  background-color: purple;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -20,8 +20,29 @@ button {
   font-size: 16px;
 }
 
+button.toggle {
+  margin: 10px 0px;
+}
+
+button.high {
+	background-color: purple;
+	border: none;
+	color: white;
+}
+
+button.low {
+	box-sizing: border-box;
+	background-color: white;
+	border: 1px solid purple;
+	color: purple;
+}
+
 button:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+button.high:hover {
+	box-shadow: none;
 }
 
 input {

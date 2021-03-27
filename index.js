@@ -134,6 +134,28 @@ function handleKeyPress(key){
 	changeControls(controlKeys[key]);
 }
 
+function handleColorButtons(key, checked){
+	if(key=='f'){
+		recalculateColorSpace = !checked;
+		return;
+	}
+	if(key!='g'&&key!='l')	return;
+	useGlobalColorSpace = key=='g';
+	recalculateColorSpace = key=='l';
+	d3.select('#fix_color')
+	.attr('checked', recalculateColorSpace?true:null)
+	.attr('disabled',useGlobalColorSpace?true:null);
+	d3.select('#globe')
+	.classed('high',useGlobalColorSpace)
+	.classed('low', !useGlobalColorSpace);
+	d3.select('#home')
+	.classed('high',!useGlobalColorSpace)
+	.classed('low', useGlobalColorSpace);
+
+	// refresh
+	changeControls([]);
+}
+
 function init(){
 	// set height and width of the svg element
 	width = window.innerWidth - 2*offset;

@@ -54,3 +54,7 @@ for(var key in direction){
 for(var i=1; i<=9; i++){
 	controlKeys[i.toString()] = controlButtons.panFraction(i/10);
 }
+
+function handlePanChange(i){
+	pan = parseInt(i)/10;
+}

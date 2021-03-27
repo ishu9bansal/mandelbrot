@@ -24,21 +24,20 @@
           <button title="shortcut: ArrowRight" class="btn" style="visibility: hidden;" >
             <i class="fa fa-arrow-right"></i>
           </button>
-          |
-          <!-- <div style="border-left:1px solid purple;"></div> -->
-          <button title="shortcut: G" class="btn high" onclick="handleColorButtons('g')" >
+          | Colors: 
+          <button title="shortcut: G" id="globe" class="toggle high" onclick="handleColorButtons('g')" >
             <i class="fa fa-globe"></i>
           </button>
-          <button title="shortcut: L" class="btn low" onclick="handleColorButtons('l')" >
+          <button title="shortcut: L" id="home" class="toggle low" onclick="handleColorButtons('l')" >
             <i class="fa fa-home"></i>
           </button>
         </div>
-        <div style="display: flex; text-align: center;">
+        <div>
           <button title="shortcut: ArrowLeft" class="btn" onclick="handleKeyPress('ArrowLeft')" >
             <i class="fa fa-arrow-left"></i>
           </button>
           <button title="shortcut: D" class="btn" onclick="handleKeyPress('d')" >
-            &nbsp;&nbsp;<i class="fa fa-bolt"></i>&nbsp;&nbsp;
+            &nbsp;<i class="fa fa-bolt"></i>&nbsp;
           </button>
           <button title="shortcut: ArrowRight" class="btn" onclick="handleKeyPress('ArrowRight')" >
             <i class="fa fa-arrow-right"></i>
@@ -55,9 +54,8 @@
           <button title="shortcut: ArrowRight" class="btn" style="visibility: hidden;" >
             <i class="fa fa-arrow-right"></i>
           </button>
-          |
-          <input type="checkbox" id="fix_color" onclick="handleColorButtons('f')">
-          <label for="fix_color">Fix Color Scale</label>
+          | Fix Colors: 
+          <input type="checkbox" id="fix_color" disabled onclick="handleColorButtons('f',this.checked)">
         </div>
         <div>
           <button title="shortcut: O" class="btn" onclick="handleKeyPress('o')" >
@@ -72,7 +70,7 @@
         </div>
         <div>
           <label for="pan_range" >Panning Step Size:
-            <input id="pan_range" type="range" value=5 min=1 max=9 oninput="handleKeyPress(this.value.toString())" />
+            <input id="pan_range" type="range" value=5 min=1 max=9 oninput="handlePanChange(this.value)" />
           </label>
         </div>
       </div>
