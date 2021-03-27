@@ -24,6 +24,14 @@
           <button title="shortcut: ArrowRight" class="btn" style="visibility: hidden;" >
             <i class="fa fa-arrow-right"></i>
           </button>
+          |
+          <!-- <div style="border-left:1px solid purple;"></div> -->
+          <button title="shortcut: G" class="btn high" onclick="handleColorButtons('g')" >
+            <i class="fa fa-globe"></i>
+          </button>
+          <button title="shortcut: L" class="btn low" onclick="handleColorButtons('l')" >
+            <i class="fa fa-home"></i>
+          </button>
         </div>
         <div style="display: flex; text-align: center;">
           <button title="shortcut: ArrowLeft" class="btn" onclick="handleKeyPress('ArrowLeft')" >
@@ -35,6 +43,7 @@
           <button title="shortcut: ArrowRight" class="btn" onclick="handleKeyPress('ArrowRight')" >
             <i class="fa fa-arrow-right"></i>
           </button>
+          <div style="border-left:3px solid purple;"></div>
         </div>
         <div>
           <button title="shortcut: ArrowLeft" class="btn" style="visibility: hidden;" >
@@ -46,6 +55,9 @@
           <button title="shortcut: ArrowRight" class="btn" style="visibility: hidden;" >
             <i class="fa fa-arrow-right"></i>
           </button>
+          |
+          <input type="checkbox" id="fix_color" onclick="handleColorButtons('f')">
+          <label for="fix_color">Fix Color Scale</label>
         </div>
         <div>
           <button title="shortcut: O" class="btn" onclick="handleKeyPress('o')" >
@@ -59,8 +71,9 @@
           </button>
         </div>
         <div>
-          <label for="pan_range" >Panning Step Size:</label>
-          <input id="pan_range" type="range" value=5 min=1 max=9 oninput="handleKeyPress(this.value.toString())" />
+          <label for="pan_range" >Panning Step Size:
+            <input id="pan_range" type="range" value=5 min=1 max=9 oninput="handleKeyPress(this.value.toString())" />
+          </label>
         </div>
       </div>
     </div>
