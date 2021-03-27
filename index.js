@@ -8,9 +8,6 @@ const aspectRatio = 16/9;
 const globalColorScale = d3.scaleSequential().domain([1,0]).interpolator(d3.interpolateInferno);
 const xScope = (s) => s*aspectRatio;
 const yScope = (s) => s;
-const GLOBAL = 'global';
-const LOCAL = 'local';
-const FIXED = 'fixed';
 
 var data;
 var canvas;
@@ -31,6 +28,8 @@ var colorScheme;
 var svg;
 var xAxis;
 var yAxis;
+var useGlobalColorSpace;
+var recalculateColorSpace;
 
 // core method
 function mandel(x0,y0){
@@ -45,10 +44,10 @@ function mandel(x0,y0){
 }
 
 function recalculateColorScheme(){
-	if(colorScheme==GLOBAL){
+	if(useGlobalColorSpace){
 		colorScale = globalColorScale;
 	}
-	else if(colorScheme==LOCAL){
+	else if(recalculateColorSpace){
 		colorScale = d3.scaleSequential()
 		.domain([d3.max(data, d => d.v), d3.min(data, d => d.v)])
 		.interpolator(d3.interpolateInferno);
@@ -108,7 +107,8 @@ function handleControl(control){
 	cy = control.cy;
 	scope = control.scope;
 	iter = control.iter;
-	colorScheme = control.colorScheme;
+	useGlobalColorSpace = control.useGlobalColorSpace;
+	recalculateColorSpace = control.recalculateColorSpace;
 	draw();
 }
 
@@ -125,7 +125,8 @@ function getControlObj(){
 		cy: cy,
 		scope: scope,
 		iter: iter,
-		colorScheme: colorScheme
+		useGlobalColorSpace: useGlobalColorSpace,
+		recalculateColorSpace: recalculateColorSpace
 	};
 }
 
