@@ -3,7 +3,7 @@ const pixel = 1;
 const axisHeight = 20;
 const axisWidth = 120;
 const resolution = 480;
-const operationPanelWidth = 220;
+const operationPanelWidth = 420;
 const aspectRatio = 16/9;
 const globalColorScale = d3.scaleSequential().domain([1,0]).interpolator(d3.interpolateInferno);
 const xScope = (s) => s*aspectRatio;
