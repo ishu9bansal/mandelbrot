@@ -1,6 +1,9 @@
-const offset = 10;
+const offset = 20;
 const pixel = 1;
+const axisHeight = 20;
+const axisWidth = 120;
 const resolution = 480;
+const operationPanelWidth = 220;
 const aspectRatio = 16/9;
 const globalColorScale = d3.scaleSequential().domain([1,0]).interpolator(d3.interpolateInferno);
 const xScope = (s) => s*aspectRatio;
@@ -25,6 +28,9 @@ var cy;
 var scope;
 var colorScale;
 var colorScheme;
+var svg;
+var xAxis;
+var yAxis;
 
 // core method
 function mandel(x0,y0){
@@ -71,6 +77,9 @@ function draw(){
 	yScale = d3.scaleLinear()
 	.domain([0,h])
 	.range([cy-yScope(scope), cy+yScope(scope)]);
+
+	xAxis.call(d3.axisBottom(xAxisScale.domain(xScale.range())));
+	yAxis.call(d3.axisRight(yAxisScale.domain(yScale.range())));
 
 	// recalculate pixel info
 	calculate();
@@ -129,12 +138,36 @@ function init(){
 	w = Math.floor(resolution*aspectRatio);
 	h = Math.floor(resolution);
 
+	svg = d3.select('svg.axes')
+	.style("top", offset)
+	.style("left", offset)
+	.attr('width', w+axisWidth)
+	.attr('height',h+axisHeight);
+
+	// axes space on svg
+	xAxis = svg.append('g')
+	.attr("transform", "translate(0," + h + ")");
+	yAxis = svg.append('g')
+	.attr("transform", "translate(" + w + ",0)");
+
+	// define axes scale
+	xAxisScale = d3.scaleLinear().range([0,w*pixel]);
+	yAxisScale = d3.scaleLinear().range([0,h*pixel]);
+
 	canvas = d3.select('canvas')
 	.attr('width', w*pixel)
 	.attr('height', h*pixel)
+	.style("top", offset)
+	.style("left", offset)
 	.on('click', handleClickZoom);
 
 	context = canvas.node().getContext('2d');
+
+	var onside = width>w+axisWidth+operationPanelWidth;
+	d3.select('.operations')
+	.style('margin', 0)
+	.style('top', offset + (onside?0:(h+axisHeight+offset)))
+	.style('left', offset + (onside?(w+axisWidth):0));
 
 	data = [];
 	d3.range(w*h).forEach(function(i){

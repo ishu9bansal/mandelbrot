@@ -1,0 +1,9 @@
+svg{
+	position: absolute;
+	z-index: 1;
+}
+
+canvas{
+	position: absolute;
+	z-index: 2;
+}

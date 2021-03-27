@@ -7,10 +7,13 @@
   <title>Mandelbrot Set</title>
 </head>
 <body>
-  <div style="display: flex">
-    <canvas></canvas>
+  <div>
     <div>
-      <p>
+      <canvas></canvas>
+      <svg class="axes"></svg>
+    </div>
+    <div>
+      <p class="operations" style="position: absolute;">
         use arrow keys to navigate around
         <br>
         I: zoom in
@@ -26,7 +29,6 @@
         G: global color scheme
         <br>
         F: fix color scheme
-
         <br>
       </p>
     </div>
