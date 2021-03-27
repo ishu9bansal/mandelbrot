@@ -130,6 +130,10 @@ function getControlObj(){
 	};
 }
 
+function handleKeyPress(key){
+	changeControls(controlKeys[key]);
+}
+
 function init(){
 	// set height and width of the svg element
 	width = window.innerWidth - 2*offset;
@@ -181,7 +185,7 @@ function init(){
 	// set up initial scales, colors and iterations
 	changeControls(controlButtons.reset);
 
-	window.onkeydown = e => changeControls(controlKeys[e.key]);
+	window.onkeydown = e => handleKeyPress(e.key);
 }
 
 init();

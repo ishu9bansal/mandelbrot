@@ -18,7 +18,7 @@
           <button title="shortcut: ArrowLeft" class="btn" style="opacity: 0;" >
             <i class="fa fa-arrow-left"></i>
           </button>
-          <button title="shortcut: ArrowUp" class="btn" onclick="changeControls(controlKeys['ArrowUp'])" >
+          <button title="shortcut: ArrowUp" class="btn" onclick="handleKeyPress('ArrowUp')" >
             <i class="fa fa-arrow-up"></i>
           </button>
           <button title="shortcut: ArrowRight" class="btn" style="visibility: hidden;" >
@@ -26,13 +26,13 @@
           </button>
         </div>
         <div style="display: flex; text-align: center;">
-          <button title="shortcut: ArrowLeft" class="btn" onclick="changeControls(controlKeys['ArrowLeft'])" >
+          <button title="shortcut: ArrowLeft" class="btn" onclick="handleKeyPress('ArrowLeft')" >
             <i class="fa fa-arrow-left"></i>
           </button>
-          <button title="shortcut: D" class="btn" onclick="changeControls(controlKeys['d'])" >
+          <button title="shortcut: D" class="btn" onclick="handleKeyPress('d')" >
             &nbsp;&nbsp;<i class="fa fa-bolt"></i>&nbsp;&nbsp;
           </button>
-          <button title="shortcut: ArrowRight" class="btn" onclick="changeControls(controlKeys['ArrowRight'])" >
+          <button title="shortcut: ArrowRight" class="btn" onclick="handleKeyPress('ArrowRight')" >
             <i class="fa fa-arrow-right"></i>
           </button>
         </div>
@@ -40,7 +40,7 @@
           <button title="shortcut: ArrowLeft" class="btn" style="visibility: hidden;" >
             <i class="fa fa-arrow-left"></i>
           </button>
-          <button title="shortcut: ArrowDown" class="btn" onclick="changeControls(controlKeys['ArrowDown'])" >
+          <button title="shortcut: ArrowDown" class="btn" onclick="handleKeyPress('ArrowDown')" >
             <i class="fa fa-arrow-down"></i>
           </button>
           <button title="shortcut: ArrowRight" class="btn" style="visibility: hidden;" >
@@ -48,15 +48,19 @@
           </button>
         </div>
         <div>
-          <button title="shortcut: O" class="btn" onclick="changeControls(controlKeys['o'])" >
+          <button title="shortcut: O" class="btn" onclick="handleKeyPress('o')" >
             <i class="fa fa-minus-square"></i> | Zoom Out
           </button>
-          <button title="shortcut: Z" class="btn" onclick="changeControls(controlKeys['z'])" >
+          <button title="shortcut: Z" class="btn" onclick="handleKeyPress('z')" >
             <i class="fa fa-refresh"></i> | Reset
           </button>
-           <button title="shortcut: I" class="btn" onclick="changeControls(controlKeys['i'])" >
+           <button title="shortcut: I" class="btn" onclick="handleKeyPress('i')" >
             <i class="fa fa-plus-square"></i> | Zoom In
           </button>
+        </div>
+        <div>
+          <label for="pan_range" >Panning Step Size:</label>
+          <input id="pan_range" type="range" value=5 min=1 max=9 oninput="handleKeyPress(this.value.toString())" />
         </div>
       </div>
     </div>
