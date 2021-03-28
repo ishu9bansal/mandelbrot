@@ -8,6 +8,10 @@ canvas{
 	z-index: 2;
 }
 
+p {
+	margin-left: 10px;
+}
+
 i {
 	width: 15px;
 	height: 18px;
