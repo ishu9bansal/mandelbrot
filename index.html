@@ -14,50 +14,50 @@
     </div>
     <div>
       <div class="operations" style="position: absolute;">
-        <div>
-          <button title="Pan Left: ArrowLeft" class="btn" style="opacity: 0;" >
-            <i class="fa fa-arrow-left"></i>
-          </button>
-          <button title="Pan Up: ArrowUp" class="btn" onclick="handleKeyPress('ArrowUp')" >
-            <i class="fa fa-arrow-up"></i>
-          </button>
-          <button title="Pan Right: ArrowRight" class="btn" style="visibility: hidden;" >
-            <i class="fa fa-arrow-right"></i>
-          </button>
-          | Colors:&nbsp;
-          <button title="Global: G" id="globe" class="toggle" onclick="handleKeyPress('g')" >
-            <i class="fa fa-globe"></i>
-          </button>
-          <button title="Local: L" id="home" class="toggle" onclick="handleKeyPress('l')" >
-            <i class="fa fa-home"></i>
-          </button>
+        <div style="float: left;">
+          <div style="text-align: center;">
+            <button title="Pan Up: ArrowUp" class="btn" onclick="handleKeyPress('ArrowUp')" >
+              <i class="fa fa-arrow-up"></i>
+            </button>
+          </div>
+          <div style="text-align: center;">
+            <button title="Pan Left: ArrowLeft" class="btn" onclick="handleKeyPress('ArrowLeft')" >
+              <i class="fa fa-arrow-left"></i>
+            </button>
+            <button title="Add details: D" class="btn" onclick="handleKeyPress('d')" >
+              <i class="fa fa-bolt"></i>
+            </button>
+            <button title="Pan Right: ArrowRight" class="btn" onclick="handleKeyPress('ArrowRight')" >
+              <i class="fa fa-arrow-right"></i>
+            </button>
+          </div>
+          <div  style="text-align: center;">
+            <button title="Pan Down: ArrowDown" class="btn" onclick="handleKeyPress('ArrowDown')" >
+              <i class="fa fa-arrow-down"></i>
+            </button>
+          </div>
         </div>
-        <div>
-          <button title="Pan Left: ArrowLeft" class="btn" onclick="handleKeyPress('ArrowLeft')" >
-            <i class="fa fa-arrow-left"></i>
-          </button>
-          <button title="Add details: D" class="btn" onclick="handleKeyPress('d')" >
-            <i class="fa fa-bolt"></i>
-          </button>
-          <button title="Pan Right: ArrowRight" class="btn" onclick="handleKeyPress('ArrowRight')" >
-            <i class="fa fa-arrow-right"></i>
-          </button>
-          <div style="border-left:3px solid purple;"></div>
+        <div style="float: right">
+          <div style="float: left">
+            <p>
+              | Colors:&nbsp;
+            </p>
+            <button title="Global: G" id="globe" class="toggle" onclick="handleKeyPress('g')" >
+              <i class="fa fa-globe"></i>
+            </button>
+            <button title="Local: L" id="home" class="toggle" onclick="handleKeyPress('l')" >
+              <i class="fa fa-home"></i>
+            </button>
+          </div>
+          <div></div>
+          <div>
+            <p>
+              | Fix Colors:&nbsp;
+            </p>
+            <input type="checkbox" id="fix_color" onclick="handleKeyPress('f')">
+          </div>
         </div>
-        <div>
-          <button title="Pan Left: ArrowLeft" class="btn" style="visibility: hidden;" >
-            <i class="fa fa-arrow-left"></i>
-          </button>
-          <button title="Pan Down: ArrowDown" class="btn" onclick="handleKeyPress('ArrowDown')" >
-            <i class="fa fa-arrow-down"></i>
-          </button>
-          <button title="Pan Right: ArrowRight" class="btn" style="visibility: hidden;" >
-            <i class="fa fa-arrow-right"></i>
-          </button>
-          | Fix Colors:&nbsp;
-          <input type="checkbox" id="fix_color" onclick="handleKeyPress('f')">
-        </div>
-        <div>
+        <div style="float: right">
           <button title="Zoom out: O" class="btn toggle" onclick="handleKeyPress('o')" >
             <i class="fa fa-minus-square"></i>
           </button>
@@ -68,13 +68,15 @@
             <i class="fa fa-plus-square"></i>
           </button>
         </div>
-        <div>
+        <div style="float: left">
           <label for="pan_range" >Panning Step Size:
             <input id="pan_range" type="range" value=5 min=1 max=9 oninput="handlePanChange(this.value)" />
           </label>
         </div>
-        <div>
-          Click <i class="fa fa-hand-o-up"></i> on canvas anywhere to zoom that region.
+        <div style="float: left">
+          <p>
+            Click <i class="fa fa-hand-o-up"></i> on canvas anywhere to zoom that region.
+          </p>
         </div>
       </div>
     </div>

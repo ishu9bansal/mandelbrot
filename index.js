@@ -195,7 +195,8 @@ function init(){
 	d3.select('.operations')
 	.style('margin', 0)
 	.style('top', offset + (onside?0:(h+axisHeight+offset)))
-	.style('left', offset + (onside?(w+axisWidth):0));
+	.style('left', offset + (onside?(w+axisWidth):0))
+	.style('width', operationPanelWidth);
 
 	data = [];
 	d3.range(w*h).forEach(function(i){
