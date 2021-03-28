@@ -91,6 +91,9 @@ function draw(){
 
 	// render based on the color scheme
 	render();
+
+	// remove blurred bg image
+	d3.select('div.bg-image').classed('bg-image', false);
 }
 
 function handleClickZoom(){
@@ -207,7 +210,7 @@ function init(){
 	globe = document.getElementById('globe');
 	home = document.getElementById('home');
 
-	// set up initial scales, colors and iterations
+	// render with initial settings
 	changeControls(controlButtons.reset);
 
 	window.onkeydown = e => handleKeyPress(e.key);
