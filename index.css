@@ -8,6 +8,11 @@ canvas{
 	z-index: 2;
 }
 
+i {
+	width: 15px;
+	height: 18px;
+}
+
 button {
   background-color: purple;
   border: none;
