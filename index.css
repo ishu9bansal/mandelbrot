@@ -63,7 +63,7 @@ input {
 
 div.bg-image {
 	/* The image used */
-	background-image: url("mandelbrot00.png");
+	background-image: url("assets/mandelbrot00.png");
 
 	/* Add the blur effect */
 	filter: blur(32px);
