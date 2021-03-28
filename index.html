@@ -76,17 +76,19 @@
               <input type="checkbox" id="fix_color" onclick="handleKeyPress('f')">
             </div>
           </div>
-          <div>
-            <div style="float: left;">
-              
-            </div>
-            <div style="float: right;">
-              <p>
-                | Pan:&nbsp;
-              </p>
-              <input style="float: right;" id="pan_range" type="range" value=5 min=1 max=9 oninput="handlePanChange(this.value)" />
-            </div>
+
+          <div style="float: right;">
+            <button title="Zoom out: O" class="btn toggle" onclick="handleKeyPress('o')" >
+              <i class="fa fa-minus-square"></i>
+            </button>
+            <button title="Reset: Z" class="btn toggle low" onclick="handleKeyPress('z')" >
+              zoom
+            </button>
+             <button title="Zoom in: I" class="btn toggle" onclick="handleKeyPress('i')" >
+              <i class="fa fa-plus-square"></i>
+            </button>
           </div>
+          
           <!-- <div style="float: left">
             <p>
               | Colors:&nbsp;
@@ -107,22 +109,22 @@
           </div> -->
         </div>
         <div>
-          <button title="Zoom out: O" class="btn toggle" onclick="handleKeyPress('o')" >
-            <i class="fa fa-minus-square"></i>
-          </button>
-          <button title="Reset: Z" class="btn toggle low" onclick="handleKeyPress('z')" >
-            zoom
-          </button>
-           <button title="Zoom in: I" class="btn toggle" onclick="handleKeyPress('i')" >
-            <i class="fa fa-plus-square"></i>
-          </button>
-        </div>
+            <div style="float: left;">
+              
+            </div>
+            <div style="float: right;">
+              <p>
+                | Pan:&nbsp;
+              </p>
+              <input style="float: right;" id="pan_range" type="range" value=5 min=1 max=9 oninput="handlePanChange(this.value)" />
+            </div>
+          </div>
         <!-- <div>
           <label for="pan_range" >Panning Step Size:
             <input id="pan_range" type="range" value=5 min=1 max=9 oninput="handlePanChange(this.value)" />
           </label>
         </div> -->
-        <div>
+        <div style="float: left;">
           <p>
             Click <i class="fa fa-hand-o-up"></i> on canvas anywhere to zoom that region.
           </p>
