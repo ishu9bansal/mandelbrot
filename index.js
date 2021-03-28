@@ -145,31 +145,13 @@ function handleColorButtons(key){
 	useGlobalColorSpace = key=='g';
 	recalculateColorSpace = key=='l';
 
-	// name tells it all
-	updateBindedButtonClasses();
-}
-
-function updateBindedButtonClasses(){
+	// change binded dom elemets
 	fixColor.disabled = useGlobalColorSpace;
 	fixColor.checked = !recalculateColorSpace;
-
 	globe.classList.remove('high','low');
 	home.classList.remove('high','low');
 	globe.classList.add(useGlobalColorSpace?'high':'low');
 	home.classList.add(useGlobalColorSpace?'low':'high');
-}
-
-function initColorControls(){
-	fixColor = document.getElementById('fix_color');
-	globe = document.getElementById('globe');
-	home = document.getElementById('home');
-
-	// didn't used the handleColorButtons('g')
-	// because we dont want to render yet (while we are in init process)
-	useGlobalColorSpace = true;
-	recalculateColorSpace = false;
-
-	updateBindedButtonClasses();
 }
 
 function init(){
@@ -220,7 +202,10 @@ function init(){
 		});
 	});
 
-	initColorControls();
+	// init color controls
+	fixColor = document.getElementById('fix_color');
+	globe = document.getElementById('globe');
+	home = document.getElementById('home');
 
 	// set up initial scales, colors and iterations
 	changeControls(controlButtons.reset);
