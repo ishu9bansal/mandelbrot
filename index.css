@@ -63,15 +63,18 @@ input {
 
 div.bg-image {
 	/* The image used */
-	background-image: url("assets/mandelbrot00.png");
+	background-image: url("assets/mandelbrot16.png");
 
 	/* Add the blur effect */
-	filter: blur(32px);
-	-webkit-filter: blur(32px);
+	filter: blur(16px);
+	-webkit-filter: blur(16px);
 
 	position: absolute;
 	top: 20px;
 	left: 20px;
 	height: 480px;
 	width: 853px;
+
+	background-repeat: no-repeat;
+	background-size: cover;
 }
