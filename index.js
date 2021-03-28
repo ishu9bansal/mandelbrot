@@ -30,6 +30,9 @@ var xAxis;
 var yAxis;
 var useGlobalColorSpace;
 var recalculateColorSpace;
+var fixColor;
+var globe;
+var home;
 
 // core method
 function mandel(x0,y0){
@@ -107,8 +110,6 @@ function handleControl(control){
 	cy = control.cy;
 	scope = control.scope;
 	iter = control.iter;
-	useGlobalColorSpace = control.useGlobalColorSpace;
-	recalculateColorSpace = control.recalculateColorSpace;
 	draw();
 }
 
@@ -116,7 +117,8 @@ function changeControls(methods){
 	if(!methods) return;
 	control = getControlObj();
 	methods.forEach(method => method(control));
-	handleControl(control);
+	setTimeout(() => handleControl(control), 5);
+	// handleControl(control);
 }
 
 function getControlObj(){
@@ -124,9 +126,7 @@ function getControlObj(){
 		cx: cx,
 		cy: cy,
 		scope: scope,
-		iter: iter,
-		useGlobalColorSpace: useGlobalColorSpace,
-		recalculateColorSpace: recalculateColorSpace
+		iter: iter
 	};
 }
 
@@ -134,26 +134,42 @@ function handleKeyPress(key){
 	changeControls(controlKeys[key]);
 }
 
-function handleColorButtons(key, checked){
-	if(key=='f'){
-		recalculateColorSpace = !checked;
-		return;
-	}
+function handleColorButtons(key){
+	// fix color operation, change control and binded button
+	if(key=='f')	recalculateColorSpace = !(fixColor.checked = recalculateColorSpace);
+
+	// early return on just changing the fix color attribute
 	if(key!='g'&&key!='l')	return;
+
+	// set the color control attributes
 	useGlobalColorSpace = key=='g';
 	recalculateColorSpace = key=='l';
-	d3.select('#fix_color')
-	.attr('checked', recalculateColorSpace?true:null)
-	.attr('disabled',useGlobalColorSpace?true:null);
-	d3.select('#globe')
-	.classed('high',useGlobalColorSpace)
-	.classed('low', !useGlobalColorSpace);
-	d3.select('#home')
-	.classed('high',!useGlobalColorSpace)
-	.classed('low', useGlobalColorSpace);
 
-	// refresh
-	changeControls([]);
+	// name tells it all
+	updateBindedButtonClasses();
+}
+
+function updateBindedButtonClasses(){
+	fixColor.disabled = useGlobalColorSpace;
+	fixColor.checked = !recalculateColorSpace;
+
+	globe.classList.remove('high','low');
+	home.classList.remove('high','low');
+	globe.classList.add(useGlobalColorSpace?'high':'low');
+	home.classList.add(useGlobalColorSpace?'low':'high');
+}
+
+function initColorControls(){
+	fixColor = document.getElementById('fix_color');
+	globe = document.getElementById('globe');
+	home = document.getElementById('home');
+
+	// didn't used the handleColorButtons('g')
+	// because we dont want to render yet (while we are in init process)
+	useGlobalColorSpace = true;
+	recalculateColorSpace = false;
+
+	updateBindedButtonClasses();
 }
 
 function init(){
@@ -203,6 +219,8 @@ function init(){
 			y: Math.floor(i/w)
 		});
 	});
+
+	initColorControls();
 
 	// set up initial scales, colors and iterations
 	changeControls(controlButtons.reset);

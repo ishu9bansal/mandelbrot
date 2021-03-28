@@ -25,10 +25,10 @@
             <i class="fa fa-arrow-right"></i>
           </button>
           | Colors:&nbsp;
-          <button title="shortcut: G" id="globe" class="toggle high" onclick="handleColorButtons('g')" >
+          <button title="shortcut: G" id="globe" class="toggle" onclick="handleKeyPress('g')" >
             <i class="fa fa-globe"></i>
           </button>
-          <button title="shortcut: L" id="home" class="toggle low" onclick="handleColorButtons('l')" >
+          <button title="shortcut: L" id="home" class="toggle" onclick="handleKeyPress('l')" >
             <i class="fa fa-home"></i>
           </button>
         </div>
@@ -55,7 +55,7 @@
             <i class="fa fa-arrow-right"></i>
           </button>
           | Fix Colors:&nbsp;
-          <input type="checkbox" id="fix_color" disabled onclick="handleColorButtons('f',this.checked)">
+          <input type="checkbox" id="fix_color" onclick="handleKeyPress('f')">
         </div>
         <div>
           <button title="shortcut: O" class="btn" onclick="handleKeyPress('o')" >

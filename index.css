@@ -31,9 +31,9 @@ button.high {
 }
 
 button.low {
-	box-sizing: border-box;
 	background-color: white;
-	border: 1px solid purple;
+	outline: 1px solid purple;
+	outline-offset: -1px;
 	color: purple;
 }
 
@@ -43,6 +43,11 @@ button:hover {
 
 button.high:hover {
 	box-shadow: none;
+}
+
+button:focus {
+  outline: 1px solid purple;
+  box-shadow: 0 12px 16px 0 #80008040, 0 17px 50px 0 #80008033;
 }
 
 input {
