@@ -37,7 +37,7 @@
             </button>
           </div>
         </div>
-        <div style="width: 200px; float: right;">
+        <div style="float: right;">
           <div>
             <div style="float: left;">
               <p>
@@ -54,19 +54,7 @@
             </div>
           </div>
 
-         <!--  <div>
-            <button title="Zoom out: O" class="btn toggle" onclick="handleKeyPress('o')" >
-              <i class="fa fa-minus-square"></i>
-            </button>
-            <button title="Reset: Z" class="btn toggle low" onclick="handleKeyPress('z')" >
-              zoom
-            </button>
-             <button title="Zoom in: I" class="btn toggle" onclick="handleKeyPress('i')" >
-              <i class="fa fa-plus-square"></i>
-            </button>
-          </div> -->
-
-          <div>
+          <div style="clear: both;">
             <div style="float: left;">
               <p>
                 | Fix Colors:&nbsp;
@@ -77,7 +65,7 @@
             </div>
           </div>
 
-          <div style="float: right;">
+          <div style="clear: both;">
             <button title="Zoom out: O" class="btn toggle" onclick="handleKeyPress('o')" >
               <i class="fa fa-minus-square"></i>
             </button>
@@ -88,36 +76,16 @@
               <i class="fa fa-plus-square"></i>
             </button>
           </div>
-          
-          <!-- <div style="float: left">
-            <p>
-              | Colors:&nbsp;
-            </p>
-            <button title="Global: G" id="globe" class="toggle" onclick="handleKeyPress('g')" >
-              <i class="fa fa-globe"></i>
-            </button>
-            <button title="Local: L" id="home" class="toggle" onclick="handleKeyPress('l')" >
-              <i class="fa fa-home"></i>
-            </button>
-          </div>
-          <div></div>
+        </div>
+        <div style="clear: both;">
           <div>
             <p>
-              | Fix Colors:&nbsp;
+              | Pan:&nbsp;
             </p>
-            <input type="checkbox" id="fix_color" onclick="handleKeyPress('f')">
-          </div> -->
-        </div>
-        <div>
-            <div style="float: left;">
-              
-            </div>
-            <div style="float: right;">
-              <p>
-                | Pan:&nbsp;
-              </p>
-              <input style="float: right;" id="pan_range" type="range" value=5 min=1 max=9 oninput="handlePanChange(this.value)" />
-            </div>
+          </div>
+          <div>
+            <input id="pan_range" type="range" value=5 min=1 max=9 oninput="handlePanChange(this.value)" />
+          </div>
           </div>
         <!-- <div>
           <label for="pan_range" >Panning Step Size:
