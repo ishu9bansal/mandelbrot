@@ -105,6 +105,9 @@ function handleClickZoom(){
 		cx = xScale(x);
 		cy = yScale(y);
 		changeControls(controlButtons.zoomIn);
+		cx = xScale(w-x);
+		cy = yScale(h-y);
+		draw();
 	}
 }
 
@@ -120,8 +123,8 @@ function changeControls(methods){
 	if(!methods) return;
 	control = getControlObj();
 	methods.forEach(method => method(control));
-	setTimeout(() => handleControl(control), 5);
-	// handleControl(control);
+	// setTimeout(() => handleControl(control), 5);
+	handleControl(control);
 }
 
 function getControlObj(){
